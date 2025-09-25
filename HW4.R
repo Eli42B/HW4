@@ -82,3 +82,23 @@ range(penguins$body_mass_g, na.rm=TRUE)
 penguins$body_mass_sml <- continuous_to_categorical(penguins$body_mass_g, c(3900, 5100), c("small", "medium", "large"))   
 
 
+##################
+# OBJECTIVE 3
+##################
+
+#Part a
+
+#we first need to subset our penguins df by species
+
+adelie_df <- subset(penguins, species == "Adelie") #df for Adelie penguins
+quantile(adelie_df$body_mass_g, na.rm = TRUE) #specify na.rm = T to not get thrown errors
+#looks like small penguins are less than the 50% quantile, so <3700
+
+gentoo_df <- subset(penguins, species == "Gentoo")
+quantile(gentoo_df$body_mass_g, na.rm = TRUE)
+#small penguins < 5000
+
+chinstrap_df <- subset(penguins, species == "Chinstrap")
+quantile(chinstrap_df$body_mass_g, na.rm = TRUE)
+#small penguins < 3700, very close to adelie in size it seems
+
