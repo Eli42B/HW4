@@ -20,25 +20,16 @@ library(tibble)
 #############################################
 
 #Create a function to convert a continuous variable into a binary variable (e.g., high/low, yes/no, 1/0, etc.). The function should allow the user to specify the breakpoint by which the data are divided in two, as well as specify the labels that both groups are assigned
+#make a very basic function to divide sizes into either big or small
 
-# A Create a function to convert a continuous variable into a binary variable(e.g., high/low, yes/no, 1/0, etc.). The function should allow the user to specify the breakpoint by which the data are divided in two, as well as specify the labels that both groups are assigned
-
-binary = function(x) {
-  ifelse(x<4000,"small","big")
+#Part a - create the function
+size_class <- function(data, break_point, size1, size2) {
+  ifelse(data > break_point, size2, size1)
 }
-binary(4)
-binary(6000)
 
-#Part B: Use your function to convert body mass into a binary variable of ‘small’and ‘large’ penguins
+#Part b - Apply function to the palmer penguin dataset
+penguins$class <- size_class(data = penguins$body_mass_g, break_point = 4000, size1 = "small",  size2 = "large")
 
-d = penguins #call the data 
-#d = na.omit(d) # remove hte NAs, they will mess us up 
-hist(d$body_mass_g) #what's a reasonable breakpoint? Let's check via a histogram
-d = as_tibble(d) #turning it into a tibble, because tibbles are better 
-
-binary(d$body_mass_g) #yep it works 
-binary1 = binary(d$body_mass_g) #saving it as a vector
-d$class_size = binary1 #bind it to the dataframe 
 
 #######################################
 # OBJECTIVE 2 
@@ -90,5 +81,4 @@ range(penguins$body_mass_g, na.rm=TRUE)
 # I'll make the cutoffs 3900 and 5100
 penguins$body_mass_sml <- continuous_to_categorical(penguins$body_mass_g, c(3900, 5100), c("small", "medium", "large"))   
 
-  
- 
+
