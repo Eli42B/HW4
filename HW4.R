@@ -21,18 +21,177 @@ library(tibble)
 
 #Create a function to convert a continuous variable into a binary variable (e.g., high/low, yes/no, 1/0, etc.). The function should allow the user to specify the breakpoint by which the data are divided in two, as well as specify the labels that both groups are assigned
 
+# A Create a function to convert a continuous variable into a binary variable(e.g., high/low, yes/no, 1/0, etc.). The function should allow the user to specify the breakpoint by which the data are divided in two, as well as specify the labels that both groups are assigned
+
+binary = function(x) {
+  ifelse(x<4000,"small","big")
+}
+binary(4)
+binary(6000)
+
+#Part B: Use your function to convert body mass into a binary variable of ‘small’and ‘large’ penguins
+
 d = penguins #call the data 
 #d = na.omit(d) # remove hte NAs, they will mess us up 
 hist(d$body_mass_g) #what's a reasonable breakpoint? Let's check via a histogram
 d = as_tibble(d) #turning it into a tibble, because tibbles are better 
 
 break_value = 4500 #based on our histogram, let's set our break_value to 4500 
+binary(d$body_mass_g) #yep it works 
+binary1 = binary(d$body_mass_g) #saving it as a vector
+d$class_size = binary1 #bind it to the dataframe 
+
+#######################################
+# OBJECTIVE 2 
+#######################################
+
+# Nathan did tihs!!! THis is not our work he helped us thank you Nathan! 
+
+continuous_to_categorical = function(values, breakpoints, category_labls) {
+  #this assumes the breakpoints and label cateogiry vectaors are ordered, and that breakpoints is 1 element smaller than label_cateogry
+  converted_values = character(length(values)) #this is our storage vector
+  #go through each value 
+  #seq in R makes hte range, range gives you the min and max 
+  for (value_number in seq(length(values))) {
+    if (is.na(values[value_number] <- NA 
+    next
+  }
+  for (breakpoint_number in seq(length(breakpoints))) {
+    if values[value_number] = breakpoints[breakpoint_number]) {
+      converted_values[value_number] = category_labels[breakpoint_number]
+      #stop the  loop
+      break
+    }
+  }
+   
+
+#Example 3: multiple if then statements
+
+binary = function(x) {
+  if (x < 2000) {
+    print("small")
+  } else if (x >= 2000 & x < 5000) {
+    print("medium")
+  } else print("large")
+}
+
+binary(100)
+binary(2500)
+binary(6000)
+
+#The problem is it cannot handle a list or a vector 
+
+binary = function(data) {
+  for (i in data) {
+    if(is.na(data$body_mass_g[i])) {
+      print("NA")
+    } else print("not NA")
+  }
+}
+
+
+binary(d)  
+
+storage = vector()
+
+binary = function(data) {
+  for (i in 1:length(data$body_mass_g)) {
+    if(is.na(data$body_mass_g[i])) {
+      storage[i] = NA
+      storage = c(storage, storage[i])
+    } else if (data$body_mass_g[i] < 2000) {
+      storage[i] = "small"
+      storage = c(storage, storage[i])
+    } else if (data$body_mass_g[i] >=2000 & data$body_mass_g[i] < 5000) {
+      storage[i] = "medium"
+      storage = c(storage, storage[i])
+    } else storage[i] = "large"
+    storage = c(storage, storage[i])
+  }
+}
+
+binary(d)
+
+#hold for now 
+binary = function(data, break_value) { 
+  for (mass in data$body_mass_g) {
+    if(is.na(mass)) {
+      next #skips stuff 
+    } else if (mass >= break_value) {
+      mass = 'large'
+    } else {
+      mass = 'small'
+    }
+  }
+}
+
+
+d$body_mass_g[1]
+
+x = c(100, 4500, 9000)
+binary(x)
+
+#this is if you expand it from ifelse to if and hten a separate else statement 
+binary = function(x) { 
+  if (x > 0) {
+    print("small")
+  } else {
+    print("big")
+  }
+}
+
 
 #We will need to learn subsetting
 #https://adv-r.hadley.nz/subsetting.html
 
+#4.5 hrs later screw it we're using dplyr :(  
+d2 = d %>% 
+  mutate(mass = if_else(body_mass_g < 4000, "small","big"))
+
 
 #Create a function that takes in two values: the data and the break value
+
+split_size = function(d) { 
+  for(mass in d$body_mass_g){
+    size = ifelse(mass > 4000, "big","small")
+    print(size)}
+}
+
+#this prints but it won't turn it into a vector 
+
+binary = vector() 
+for (i in seq(length(x))) { 
+  if(is.na(x[i])) {
+    binary[i] = NA 
+    else if(x[i] > 25) {
+      binary[i] = "big"
+    } else binary[i] = "small"
+  }
+  
+  
+split_size(d)
+mass = split_size(d)
+d$split_size = split_size(d)
+
+split = vector() 
+split_size = function(d) { 
+  for(mass in d$body_mass_g){
+    size = ifelse(mass > 4000, "big","small")
+    split = c(size)}
+}
+
+
+#############################33
+binary = vector() 
+for (i in seq(length(x))) {
+  if(is.na(x[i])) {
+    binary[i] = NA
+  }else if(x[i] > 25) { 
+    binary[i] = "big"
+  } else binary[i] = "small"
+}
+
+#hold for now 
 binary = function(data, break_value) { 
   for (mass in data$body_mass_g) {
     if(is.na(mass)) {
@@ -45,10 +204,72 @@ binary = function(data, break_value) {
   }
 }
 
+binary(d, break_value)
+binary(d, 4000) 
 
 #Create a function that takes in two values: the data and the break value
 
 body_mass_g = d$body_mass_g
+
+mass = vector() 
+binary = function(data, break_value) { 
+  for (i in seq_length(data) {
+    if(is.na(mass)) {
+      next #skips stuff 
+    } else if (data$body_mass_g >= break_value) {
+      mass = 'large'
+    } else {
+       = 'small'
+    }
+  }
+}
+
+#Mini example without a function 
+x = c(1,2,3,NA,60)
+mass = ifelse(x>25, "big","small")
+mass
+mass = ifelse(d$body_mass_g > 4000, "big","small")
+mass
+d$mass = mass
+
+#TA example 
+binary = vector() 
+for (i in seq(length(x))) { 
+  if(is.na(x[i])) {
+    binary[i] = NA 
+else if(x[i] > 25) {
+    binary[i] = "big"
+  } else binary[i] = "small"
+}
+
+################ THIS WORKS DO NOT TOUCH ################
+binary = vector()
+for (i in seq(length(x))) {
+  if(is.na(x[i])) {
+    binary[i] = NA
+  }else if(x[i] > 25) { 
+    binary[i] = "big"
+  } else binary[i] = "small"
+}
+binary
+###################################################################
+
+#[] means the location not hte item itself 
+#vectors the [] refers to the actual value 
+#for vectors, dataframes, and arrays only need one set of sq brackets
+#for lists, [] means the locatoin and [[]] means the stuff inside 
+
+x = c(1,2,3,NA)
+y = c(2,5,6,9)
+listy = list(x,y)
+# to get the first element in the list you need hte double brakets, to get the delicious goodies inside oyu need single brackets 
+
+listy[[1]] #gives you the first full thing in hte list 
+listy[[1]][1] #gives you the first goody in list one, you nneed to chain them, so go to the first list, and then take the first element
+vectory = c(x,y)
+vectory[[3]] #vectors don't care about double square brackets? maybe 
+
+#why is this like this? because lists can contain entire dataframes and other stuff 
 
 binary = function(data, break_value) { 
   for (mass in body_mass_g) {
