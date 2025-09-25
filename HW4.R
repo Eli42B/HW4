@@ -63,8 +63,54 @@ continuous_to_categorical = function(values, breakpoints, category_labls) {
       break
     }
   }
-   
 
+continuous_to_categorical <- function(values, breakpoints, category_labels) {
+  # This assumes the breakpoints and label_categories vectors are ordered,
+  # and that breakpoints is 1 element smaller than label_categories.
+  # This is our storage vector
+  converted_values <- character(length(values))
+  # Go through each value (it would be nice if this was vectorizable)
+  # Seq in R makes the range, range gives you the min and max
+  for (value_number in seq(length(values))) {
+    # NA will crash the function unless I do this
+    if (is.na(values[value_number])) {
+      converted_values[value_number] <- NA
+      # Continues with the next thing in the loop
+      next
+    }
+    # Otherwise, evaluate if it's less than or equal to each breakpoint at a time
+    for (breakpoint_number in seq(length(breakpoints))) {
+      # If value is less than breakpoint we assign label and stop looping
+      if (values[value_number] <= breakpoints[breakpoint_number]) {
+        # Assign the label, which is the corresponding index in label_categories EXCEPT for the last one
+        converted_values[value_number] <- category_labels[breakpoint_number]
+        # Stop the loop
+        break
+      }
+    }
+    # If the label wasn't assigned yet after we hit the last breakpoint it's the last label by default
+    if (converted_values[value_number] == "") {
+      # NEGATIVE INDEXING DROPS THE ELEMENT IN R IT DOES NOT ACCESS THE LAST
+      converted_values[value_number] <- tail(category_labels, n=1)
+    }
+  }
+  return(converted_values)
+}
+
+# Test omg it works!!!!
+continuous_to_categorical(c(1:10), breakpoints=c(2, 4, 6, 8), category_labels=c("below 2", "below 4", "below 6", "below 8", "above 8"))
+# Second test with NA things
+continuous_to_categorical(c(2, NA, 3), breakpoints=c(2.5), category_labels=c("small", "large"))
+
+# Question 2b - small, medium, and large penguins
+# Look at a range again
+range(penguins$body_mass_g, na.rm=TRUE)
+# I'll make the cutoffs 3900 and 5100
+penguins$body_mass_sml <- continuous_to_categorical(penguins$body_mass_g, c(3900, 5100), c("small", "medium", "large"))   
+
+  
+  
+  
 #Example 3: multiple if then statements
 
 binary = function(x) {
