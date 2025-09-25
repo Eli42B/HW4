@@ -36,7 +36,6 @@ d = penguins #call the data
 hist(d$body_mass_g) #what's a reasonable breakpoint? Let's check via a histogram
 d = as_tibble(d) #turning it into a tibble, because tibbles are better 
 
-break_value = 4500 #based on our histogram, let's set our break_value to 4500 
 binary(d$body_mass_g) #yep it works 
 binary1 = binary(d$body_mass_g) #saving it as a vector
 d$class_size = binary1 #bind it to the dataframe 
