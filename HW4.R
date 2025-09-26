@@ -227,7 +227,7 @@ continuous_to_categorical_by_species_boxplot <- function(dataframe, species_vect
 }
 
 # Run it with penguins
-size_categories_by_species_penguins <- continuous_to_categorical_by_species_boxplot(dataframe=penguins,
+size_categories_by_species_penguins_boxplot <- continuous_to_categorical_by_species_boxplot(dataframe=penguins,
                                                                                     species_vector=c("Adelie", "Gentoo", "Chinstrap"),
                                                                                     species_specific_breakpoints=list(c(3450, 3900), c(4800, 5350), c(3583, 3833)),
                                                                                     category_labels=c("small", "medium", "large"))
@@ -237,7 +237,7 @@ size_categories_by_species_penguins <- continuous_to_categorical_by_species_boxp
 #Note: you need to have still changed the penguins dataframe and bound a new column with the correct classes on it for this to work 
 
 #library(tidyverse)
-p = ggplot(penguins, aes(x = body_mass_sml, y = body_mass_g, fill = species)) + 
+p = ggplot(size_categories_by_species_penguins, aes(x = body_mass_sml_by_species, y = body_mass_g, fill = species)) + 
   geom_boxplot() + 
   labs(title = "Boxplot of Penguin Sizes by Species", x = "Size", y = "Body Mass (g)") +
   theme_classic()
