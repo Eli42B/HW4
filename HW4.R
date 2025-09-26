@@ -14,6 +14,7 @@ install.packages("palmerpenguins") #if you try to load 'penguins' you will get a
 library(palmerpenguins)
 library(dplyr)
 library(tibble)
+library(tidyverse)
 
 #############################################
 # OBJECTIVE 1 
@@ -230,6 +231,21 @@ size_categories_by_species_penguins <- continuous_to_categorical_by_species_boxp
                                                                                     species_vector=c("Adelie", "Gentoo", "Chinstrap"),
                                                                                     species_specific_breakpoints=list(c(3450, 3900), c(4800, 5350), c(3583, 3833)),
                                                                                     category_labels=c("small", "medium", "large"))
+
+
+# Another way to create the boxplot (moving the legend) 
+#Note: you need to have still changed the penguins dataframe and bound a new column with the correct classes on it for this to work 
+
+#library(tidyverse)
+p = ggplot(penguins, aes(x = body_mass_sml, y = body_mass_g, fill = species)) + 
+  geom_boxplot() + 
+  labs(title = "Boxplot of Penguin Sizes by Species", x = "Size", y = "Body Mass (g)") +
+  theme_classic()
+
+p + scale_x_discrete(labels = c("large" = "Large", "medium" = "Medium", "small" = "Small"))
+#p is storing it, ggplot calls the tidyverse library, penguins is our data, we set our x and y, and we 'fill' ie group by species. Ggplot works in layers, so then we add on to this that we want it to be a boxplot (geom_boxplot()), and then we can add personalized labels (labs) and specificy a theme (I did classic, there is also a colorblind friendly version). 
+#Then if we want to personalize teh x axis labels we call the graph again and add on the scale_x_discrete function 
+
 ##################
 # OBJECTIVE 5
 ##################
