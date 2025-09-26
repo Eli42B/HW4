@@ -318,3 +318,11 @@ boxplot(body_mass_g ~ species + assigned_category,
         cex.lab=1, cex.axis=1, xlab="Body size categories", ylab="Body mass (g)")
 legend("topright", fill=c("blue", "green", "yellow"), 
        legend=c("Adelie", "Gentoo", "Chinstrap"))
+
+#Another way to visualize w/ ggplot2 package 
+#library(tidyverse)
+p = ggplot(with_5_categories, aes(x = assigned_category, y = body_mass_g, fill = species)) + 
+  geom_boxplot() + 
+  labs(title = "Boxplot of Penguin Sizes by Species and Size Categories", x = "Body Size Categorise", y = "Body Mass (g)") +
+  theme_classic()
+p 
